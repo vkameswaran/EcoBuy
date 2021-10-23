@@ -1,18 +1,9 @@
 import React, {Component, useState} from 'react';
-import { Keyboard, ScrollView, StyleSheet, Text, View, Button} from 'react-native';
+import { Keyboard, ScrollView, StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import GroceryItem from '../components/GroceryItem';
 import ItemInputField from '../components/ItemInputField'
-/*
-class GroceriesHome extends Component{
-    render() {
-        return(
-            grocery()
-        );
-    }
-}
-*/
 
 const GroceriesHome = function (props) {
     const [items, setItems] = useState([]);
@@ -33,8 +24,7 @@ const GroceriesHome = function (props) {
   
     return (
       <View style={styles.container}>
-          <Text style={styles.heading}>Groceries</Text>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
           {
           items.map((brandItem, index) => {
             return (
@@ -46,10 +36,12 @@ const GroceriesHome = function (props) {
         }
         </ScrollView>
         <ItemInputField addItem={addItem} />
-        <Button
-            title="Finalize List"
-            onPress={() => finalizeList}
-        />
+       
+        <TouchableOpacity onPress={() => finalizeList()} style={styles.finalize}>
+          <Text>
+            Finalize List
+          </Text>
+        </TouchableOpacity>
       </View> 
     );
   }
@@ -58,7 +50,21 @@ const GroceriesHome = function (props) {
     container: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#1E1A3C',
+      backgroundColor: '#FFFFFF',
+      alignItems: 'center',
+      // alignSelf: 'center'
+    },
+    scrollContainer: {
+
+      alignItems: 'center'
+    },
+    finalize: {
+      marginTop: 15,
+      marginBottom: 15,
+      backgroundColor: "orange",
+      color: 'black',
+      padding: 15,
+      borderRadius: 15
     },
     heading: {
       color: '#fff',

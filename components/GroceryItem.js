@@ -11,8 +11,10 @@ const GroceryItem = (props) => {
             <View style={styles.itemContainer}>
                 <Text style={styles.item}>{props.brand}</Text>
                 <Text style={styles.item}>{props.item}</Text>
+            </View>
+            <View style={styles.indexContainer}>
                 <TouchableOpacity onPress={() => props.deleteItem()}>
-                    <MaterialIcons style={styles.delete} name="delete" size={18} color='#fff' />
+                    <MaterialIcons style={styles.delete} name="delete" size={18} color='#000000' />
                 </TouchableOpacity>
             </View>
         </View>
@@ -26,24 +28,27 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginHorizontal: 20,
+        alignContent: 'space-between',
+        borderRadius: 12,
+        backgroundColor: '#FDF5E6',
+        borderWidth: 1,
+        borderColor: '#000000',
+        width: '600px'
     },
     indexContainer: {
-        backgroundColor: '#3E3364',
-        borderRadius: 12,
-        marginRight: 10,
+        
+        
         alignItems: 'center',
         justifyContent: 'center',
-        width: 50,
+        width: 40,
         height: 50,
     },
     index: {
-        color: '#fff',
         fontSize: 20,
     },
     itemContainer: {
-        backgroundColor: '#3E3364',
-        borderRadius: 12,
-        flexDirection: 'row',
+        backgroundColor: '#FDF5E6',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
         flex: 1,
@@ -52,7 +57,7 @@ const styles = StyleSheet.create({
         minHeight: 50,
     },
     item: {
-        color: '#fff',
+        color: '#000000',
         width: '90%',
         fontSize: 16,
     },
