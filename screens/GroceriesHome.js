@@ -1,18 +1,9 @@
 import React, {Component, useState} from 'react';
-import { Keyboard, ScrollView, StyleSheet, Text, View, Button} from 'react-native';
+import { Keyboard, ScrollView, StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import GroceryItem from '../components/GroceryItem';
 import ItemInputField from '../components/ItemInputField'
-/*
-class GroceriesHome extends Component{
-    render() {
-        return(
-            grocery()
-        );
-    }
-}
-*/
 
 const GroceriesHome = function (props) {
     const [items, setItems] = useState([]);
@@ -33,7 +24,6 @@ const GroceriesHome = function (props) {
   
     return (
       <View style={styles.container}>
-          <Text style={styles.heading}>Groceries</Text>
         <ScrollView style={styles.scrollView}>
           {
           items.map((brandItem, index) => {
@@ -46,8 +36,12 @@ const GroceriesHome = function (props) {
         }
         </ScrollView>
         <ItemInputField addItem={addItem} />
+       
         <Button
-            title="Finalize List"
+        
+            title={"Finalize List"}
+            color ={"black"}
+            
             onPress={() => finalizeList}
         />
       </View> 
@@ -58,7 +52,7 @@ const GroceriesHome = function (props) {
     container: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#1E1A3C',
+      backgroundColor: '#FFFFFF',
     },
     heading: {
       color: '#fff',

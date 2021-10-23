@@ -6,14 +6,18 @@ import GroceriesHome from './screens/GroceriesHome';
 import { Keyboard, ScrollView, StyleSheet, Text, View, Button} from 'react-native';
 import GroceryItem from './components/GroceryItem';
 import ItemInputField from './components/ItemInputField'
+import MaterialIcons from '@expo/vector-icons'
 
 const Tab = createBottomTabNavigator();
+
+
 
 export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-      <Tab.Screen name="GroceriesHome" component={GroceriesHome} />
+        
+      <Tab.Screen name="Groceries" component={GroceriesHome} />
         <Tab.Screen name="ESG" component={ESG} />
       </Tab.Navigator>
     </NavigationContainer>
