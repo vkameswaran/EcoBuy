@@ -1,9 +1,12 @@
-import React, {Component} from "react-native";
+import React, {Component} from 'react';
 import {
     View, 
     Text,
-    StyleSheet
-} from "react-native";
+    StyleSheet,
+    Button
+} from 'react-native';
+import { withNavigation } from 'react-navigation';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 class LoginScreen extends Component{
     render() {
@@ -14,12 +17,12 @@ class LoginScreen extends Component{
         );
     }
 }
-export default LoginScreen;
+export default withNavigation(LoginScreen);
 
 const styles = StyleSheet.create({
     container: {
         flex:1,
         alignItems:'center',
-        justidyContent:'center'
+        justifyContent:'center'
     }
 });
