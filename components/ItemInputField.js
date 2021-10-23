@@ -15,12 +15,10 @@ const ItemInputField = (props) => {
     }
 
     return (
-        <KeyboardAwareScrollView 
-        style={styles.container},
-        resetScrollToCoords={{x:0, y:0}}
-        contentContainerStyle={styles.container}
-        scrollEnabled={false}
-      >
+        <KeyboardAvoidingView 
+            style={styles.container}
+            behavior="padding"
+        >
         <TextInput style={styles.inputField} value={brand} onChangeText={text => setBrand(text)} placeholder={'Brand'} placeholderTextColor={'#A9A9A9'} clearTextOnFocus={true}/>
         <TextInput style={styles.inputField} value={item} onChangeText={text => setItem(text)} placeholder={'Item'} placeholderTextColor={'#A9A9A9' } clearTextOnFocus={true}/>
         <TouchableOpacity onPress={() => handleAdd(brand, item)}>
@@ -28,7 +26,7 @@ const ItemInputField = (props) => {
               <MaterialIcons name="keyboard-arrow-up" size={24} color="black" />
           </View>
         </TouchableOpacity>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     );
 }
 
@@ -46,14 +44,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 10,
         position: 'absolute',
-        bottom: 60,
+        bottom: 75,
     },
     inputField: {
         color: '#000000',
         height: 50,
         textAlign: 'center',
         flex: 1,
-        marginBottom:20,
         fontSize:16,
         fontStyle: 'italic'
 

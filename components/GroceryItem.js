@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         backgroundColor: '#FDF5E6',
         borderWidth: 1,
-        borderColor: '#000000'
+        borderColor: '#000000',
+        width: '600px'
     },
     indexContainer: {
         

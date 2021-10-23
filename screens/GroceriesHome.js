@@ -24,7 +24,7 @@ const GroceriesHome = function (props) {
   
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
           {
           items.map((brandItem, index) => {
             return (
@@ -37,13 +37,11 @@ const GroceriesHome = function (props) {
         </ScrollView>
         <ItemInputField addItem={addItem} />
        
-        <Button
-        
-            title={"Finalize List"}
-            color ={"black"}
-            
-            onPress={() => finalizeList}
-        />
+        <TouchableOpacity onPress={() => finalizeList()} style={styles.finalize}>
+          <Text>
+            Finalize List
+          </Text>
+        </TouchableOpacity>
       </View> 
     );
   }
@@ -53,6 +51,20 @@ const GroceriesHome = function (props) {
       flex: 1,
       flexDirection: 'column',
       backgroundColor: '#FFFFFF',
+      alignItems: 'center',
+      // alignSelf: 'center'
+    },
+    scrollContainer: {
+
+      alignItems: 'center'
+    },
+    finalize: {
+      marginTop: 15,
+      marginBottom: 15,
+      backgroundColor: "orange",
+      color: 'black',
+      padding: 15,
+      borderRadius: 15
     },
     heading: {
       color: '#fff',
