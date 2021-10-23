@@ -33,7 +33,7 @@ class FirestoreUtilities {
             if (doc.exists) {
                 return doc.data();
             } else {
-                console.log(`No such document: ${company} ${itemName}`);
+                return undefined;
             }
         }).catch((error) => {
             console.log("Error getting document:", error);
@@ -72,6 +72,88 @@ class FirestoreUtilities {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
+    }
+
+    /**
+     * This function handles all backend updates when a user submits a new shopping list.
+     *
+     * @param userShoppingList an array of objects, each containing a company (optional), itemName, and score (1-5)
+     * @returns {Promise<void>}
+     */
+    static saveNewShoppingTrip = async (userShoppingList) => {
+        const defaultCompany = "default";
+
+        if (!firebase.auth().currentUser) {
+            console.log("No email found.");
+            console.log(firebase.auth().currentUser);
+            return;
+        }
+        // Find each item in `items`
+        // Update the aggregate score for each item on the list
+        // Form a list consisting of strings `company__item__packaging`
+        const runningList = [];
+
+        for (let i in userShoppingList) {
+            const userItem = userShoppingList[i];
+            const actualCompany = userItem.company.toLowerCase() || defaultCompany.toLowerCase();
+            const realItem = await this.getItem(actualCompany, userItem.itemName);
+            console.log(realItem);
+            const toWrite = realItem ? {
+                averagePackaging: (realItem.numberOfRatings * realItem.averagePackaging + userItem.score) / (realItem.numberOfRatings + 1),
+                numberOfRatings: realItem.numberOfRatings + 1
+            } : {
+                company: FirestoreUtilities.capitalizeFirstLetter(actualCompany),
+                itemName: FirestoreUtilities.capitalizeFirstLetter(userItem.itemName),
+                averagePackaging: 0,
+                numberOfRatings: 0
+            };
+            await firestore.collection("items").doc(`${actualCompany}__${userItem.itemName.toLowerCase()}`).set(
+                toWrite, { merge: true }
+            ).then(() => {
+                    console.log("Document successfully written!");
+                    runningList.push(`${actualCompany}__${userItem.itemName.toLowerCase()}__${userItem.score}`)
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                });
+        }
+
+        // Add this list to `shoppingTrips`, with the current timestamp
+        console.log("Adding " + runningList + " to database");
+        const shoppingListRef = await firestore.collection("shoppingTrips").add({
+            items: runningList,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            return docRef.id;
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+
+        // Add the shopping trip to the user's list of trips
+        console.log("Adding " + shoppingListRef + " to user trips");
+        console.log(firebase.auth().currentUser.email);
+        const userRef = firestore.collection("users").doc(firebase.auth().currentUser.email)
+        userRef.get().then(data => data.data().trips).then((oldTrips) => {
+            oldTrips.push(shoppingListRef)
+            userRef.set({
+                trips: oldTrips
+            })
+        }).then(() => {
+            console.log("Document successfully written!");
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+    };
+
+    /**
+     * Helper function to capitalize the first letter of a string.
+     *
+     * @param s the input string, e.g. "milk"
+     * @returns {string} the output string, e.g. "Milk"
+     */
+    static capitalizeFirstLetter = (s) => {
+        return s.charAt(0).toUpperCase() + s.slice(1);
     }
 
 }
