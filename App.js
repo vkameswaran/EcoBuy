@@ -1,21 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ESG from './screens/ESG'; 
+import GroceriesHome from './screens/GroceriesHome';
+import { Keyboard, ScrollView, StyleSheet, Text, View, Button} from 'react-native';
+import GroceryItem from './components/GroceryItem';
+import ItemInputField from './components/ItemInputField'
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+      <Tab.Screen name="GroceriesHome" component={GroceriesHome} />
+        <Tab.Screen name="ESG" component={ESG} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
+
