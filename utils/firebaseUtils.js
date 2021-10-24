@@ -41,6 +41,22 @@ class FirestoreUtilities {
 
     };
 
+    static getItemsFromTrip = async (shoppingTripId) => {
+
+        var docRef = firestore.collection("shoppingTrips").doc(shoppingTripId);
+
+        return docRef.get().then((doc) => {
+            if (doc.exists) {
+                return doc.data();
+            } else {
+                return undefined;
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+
+    };
+
     /**
      * Return a score for how good or bad a shopping trip was, compared to the average.
      *
