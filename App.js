@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ESG from './screens/ESG';
+import History from './screens/History';
 import GroceriesHome from './screens/GroceriesHome';
 import { Keyboard, ScrollView, StyleSheet, Text, View, Button} from 'react-native';
 import GroceryItem from './components/GroceryItem';
@@ -33,6 +34,7 @@ export default function App() {
             ? <NavigationContainer>
                 <Tab.Navigator>
                     <Tab.Screen name="Groceries" component={GroceriesHome} />
+                    <Tab.Screen name="History" component={History} />
                     <Tab.Screen name="ESG" component={ESG} />
                 </Tab.Navigator>
             </NavigationContainer>
