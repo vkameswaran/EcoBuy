@@ -35,7 +35,7 @@ export default function App() {
                 <Tab.Navigator>
                     <Tab.Screen name="Groceries" component={GroceriesHome} />
                     <Tab.Screen name="History" component={History} />
-                    <Tab.Screen name="ESG" component={ESG} />
+                    {/* <Tab.Screen name="ESG" component={ESG} /> */}
                 </Tab.Navigator>
             </NavigationContainer>
             :
