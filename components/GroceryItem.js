@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'
 
 const GroceryItem = (props) => {
     return (
@@ -12,9 +13,17 @@ const GroceryItem = (props) => {
                 <Text style={styles.item}>{props.brand}</Text>
                 <Text style={styles.item}>{props.item}</Text>
             </View>
-            <View style={styles.indexContainer}>
-                <TouchableOpacity onPress={() => props.editESG()}>
-                    <MaterialIcons style={styles.delete} name="park" size={18} color='#000000' />
+            <View style={styles.small}>
+                <TouchableOpacity onPress={() => props.decreaseESG()}>
+                    <AntDesign name="caretdown" size={18} color="black" />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.small}>
+                <Text>{props.packaging}</Text>
+            </View>
+            <View style={styles.small}>
+                <TouchableOpacity onPress={() => props.increaseESG()}>
+                <AntDesign name="caretup" size={18} color="black" />
                 </TouchableOpacity>
             </View>
             <View style={styles.indexContainer}>
@@ -59,6 +68,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         minHeight: 50,
+    },
+    small: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 30,
+        height: 50,
     },
     item: {
         color: '#000000',
