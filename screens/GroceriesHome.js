@@ -5,6 +5,7 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import GroceryItem from '../components/GroceryItem';
 import ItemInputField from '../components/ItemInputField'
 import FirestoreUtilities from '../utils/firebaseUtils'
+import UserModification from '../components/UserModification'
 
 const GroceriesHome = function (props) {
     const [items, setItems] = useState([]);
@@ -32,12 +33,12 @@ const GroceriesHome = function (props) {
       return '#b80220'
     }
     const addItem = (brand, item) => {
-      if (brand == null || item == null) return;
+      if (brand == null || item == null || brand == '' || item == '') return;
       //console.log(FirestoreUtilities.getItem(brand, item))
       
       var _ = FirestoreUtilities.getItem(brand, item).then(result => {
         if (result == undefined) {
-          setPackData([...packData, [null, '#FFFFFF']])
+          setPackData([...packData, [3, computeColor(3)]])
         } else {
           setPackData([...packData, [result.averagePackaging, computeColor(result.averagePackaging)]])
         }
@@ -54,8 +55,21 @@ const GroceriesHome = function (props) {
       setPackData(packData.filter((pd, index) => index != deleteIndex));
     }
 
-    const editESG = (editIndex) => {
-      //this.displayModal(true);
+    const decreaseESG = (editIndex) => {
+      setPackData(packData.map((pd, index) => {
+        if (index == editIndex && pd[0] >= 2) {
+          return [pd[0] - 1, computeColor(pd[0] - 1)];
+        }
+        return pd
+      }));
+    }
+    const increaseESG = (editIndex) => {
+      setPackData(packData.map((pd, index) => {
+        if (index == editIndex && pd[0] <= 4) {
+          return [pd[0] + 1, computeColor(pd[0] + 1)];
+        }
+        return pd
+      }));
     }
   
     const finalizeList = () => {
@@ -64,7 +78,7 @@ const GroceriesHome = function (props) {
       //console.log(items)
       //console.log(packData)
       let x = items.map((item, index) => {
-        return {company : item[0], itemName: item[1], score: packData[index][0]}
+        return {company : item[0], itemName: item[1], score: packData[index][0] | 0}
       })
       FirestoreUtilities.saveNewShoppingTrip(x);
       setItems([]);
@@ -73,13 +87,12 @@ const GroceriesHome = function (props) {
   
     return (
       <View style={styles.container}>
-
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
           {
           items.map((itemData, index) => {
             return (
               <View key={index} style={styles.itemContainer}>
-                <GroceryItem index={index + 1} brand={itemData[0]} item = {itemData[1]} packaging = {packData[index][0]} color = {packData[index][1]} deleteItem={() => deleteItem(index)} editESG ={() => editESG(index)}/>
+                <GroceryItem index={index + 1} brand={itemData[0]} item = {itemData[1]} packaging = {packData[index][0] | 0} color = {packData[index][1]} deleteItem={() => deleteItem(index)} increaseESG ={() => increaseESG(index)} decreaseESG ={() => decreaseESG(index)}/>
               </View>
             );
           })
