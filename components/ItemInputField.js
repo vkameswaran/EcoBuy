@@ -10,8 +10,8 @@ const ItemInputField = (props) => {
 
     const handleAdd = (brand, item) => {
         props.addItem(brand, item);
-        setBrand(null);
-        setItem(null);
+        setBrand('');
+        setItem('');
     }
 
     return (

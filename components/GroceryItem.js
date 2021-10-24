@@ -4,13 +4,18 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const GroceryItem = (props) => {
     return (
-        <View style={styles.container}>
+        <View style={[ styles.container, {backgroundColor: props.color} ]}>
             <View style={styles.indexContainer}>
                 <Text style={styles.index}>{props.index}</Text>
             </View>
-            <View style={styles.itemContainer}>
+            <View style={[ styles.itemContainer, {backgroundColor: props.color} ]}>
                 <Text style={styles.item}>{props.brand}</Text>
                 <Text style={styles.item}>{props.item}</Text>
+            </View>
+            <View style={styles.indexContainer}>
+                <TouchableOpacity onPress={() => props.editESG()}>
+                    <MaterialIcons style={styles.delete} name="park" size={18} color='#000000' />
+                </TouchableOpacity>
             </View>
             <View style={styles.indexContainer}>
                 <TouchableOpacity onPress={() => props.deleteItem()}>
@@ -33,7 +38,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FDF5E6',
         borderWidth: 1,
         borderColor: '#000000',
-        width: '600px'
+        width: '600px',
+        padding: 8
     },
     indexContainer: {
         
