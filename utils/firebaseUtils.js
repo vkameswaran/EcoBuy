@@ -130,17 +130,29 @@ class FirestoreUtilities {
         // Add the shopping trip to the user's list of trips
         console.log("Adding " + shoppingListRef + " to user trips");
         console.log(firebase.auth().currentUser.email);
-        const userRef = firestore.collection("users").doc(firebase.auth().currentUser.email)
-        userRef.get().then(data => data.data().trips).then((oldTrips) => {
-            oldTrips.push(shoppingListRef)
+        const userRef = firestore.collection("users").doc(firebase.auth().currentUser.email);
+        const userRecordExists = !!(await userRef.get().then(data => data.data()));
+        if (userRecordExists) {
+            userRef.get().then(data => data.data().trips).then((oldTrips) => {
+                oldTrips.push(shoppingListRef);
+                userRef.set({
+                    trips: oldTrips
+                })
+            }).then(() => {
+                console.log("Document successfully written!");
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+        } else {
             userRef.set({
-                trips: oldTrips
-            })
-        }).then(() => {
-            console.log("Document successfully written!");
-        }).catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+                trips: [shoppingListRef]
+            }).then(() => {
+                console.log("Document successfully written!");
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+        }
+
     };
 
     /**
