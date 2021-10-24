@@ -60,8 +60,13 @@ const GroceriesHome = function (props) {
   
     const finalizeList = () => {
       //[[brand1, item1], [brand2, item2],...]
+      //[[avgPacking or updated, item1], [brand2, item2],...]
       //console.log(items)
       //console.log(packData)
+      let x = items.map((item, index) => {
+        return {company : item[0], itemName: item[1], score: packData[index][0]}
+      })
+      FirestoreUtilities.saveNewShoppingTrip(x);
       setItems([]);
       setPackData([]);
     }
