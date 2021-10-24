@@ -61,10 +61,7 @@ class FirestoreUtilities {
 
             for (let i in doc.data().items) {
                 let [company, item, packagingScore] = doc.data().items[i].split("__");
-                let avgPackaging = await firestore.collection("items").doc(`${company}__${item}`).get().then((doc) => {
-                    return doc.data().averagePackaging
-                });
-                runningTotal += avgPackaging - packagingScore;
+                runningTotal += parseInt(packagingScore);
             }
 
             return runningTotal / doc.data().items.length;
