@@ -106,7 +106,7 @@ class FirestoreUtilities {
             if (doc.exists) {
                 return doc.data().trips;
             } else {
-                return undefined;
+                return [];
             }
         }).catch((error) => {
             console.log("Error getting document:", error);

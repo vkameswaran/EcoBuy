@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
         padding: 8
     },
     indexContainer: {
-        
-        
         alignItems: 'center',
         justifyContent: 'center',
         width: 40,

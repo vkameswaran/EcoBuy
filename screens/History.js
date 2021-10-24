@@ -25,9 +25,9 @@ async function loadData() {
 function calculateOverallAverage(scores) {
     let runningTotal = 0;
     scores.forEach(item => runningTotal += item)
-    console.log(runningTotal)
-    console.log(scores.length)
-    console.log(runningTotal / scores.length)
+    // console.log(runningTotal)
+    // console.log(scores.length)
+    // console.log(runningTotal / scores.length)
     return runningTotal / scores.length;
     // console.log(runningTotal)
 }
@@ -55,15 +55,51 @@ const History = function (props) {
     })
 
     return (
-        <View>
-            <Text>Average score: {calculateOverallAverage(scores)}</Text>
+        <View style = {styles.container}>
+            <Text style={styles.title}>Sustainability Index: {calculateOverallAverage(scores)}</Text>
+            <Text style = {styles.customText}>
             {results.map((e, i) => <div key={i}>{e}</div>)}
+            </Text>
         </View>
       );
 
 }
 
 const styles = StyleSheet.create({
+    customText: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginHorizontal: 20,
+        borderRadius: 12,
+        backgroundColor: '#FDF5E6',
+        borderWidth: 1,
+        borderColor: '#000000',
+        width: '600px',
+        padding: 8,
+        paddingBottom: 5,
+        fontStyle: 'italic',
+        fontSize: 17,
+      },
+      title: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginHorizontal: 25,
+        marginTop: 10,
+        marginBottom:10,
+        fontSize: 20,
+
+      },
+      container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+      }
+      
+
 
 });
 
