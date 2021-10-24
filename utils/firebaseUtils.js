@@ -69,7 +69,34 @@ class FirestoreUtilities {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-    }
+    };
+
+    /**
+     * Return a list of a user's past trips
+     *
+     * @returns {Promise<*>}
+     */
+     static getUserHistory = async () => {
+
+        if (!firebase.auth().currentUser) {
+            console.log("No email found.");
+            console.log(firebase.auth().currentUser);
+            return;
+        }
+
+        var docRef = firestore.collection("users").doc(firebase.auth().currentUser.email);
+
+        return docRef.get().then((doc) => {
+            if (doc.exists) {
+                return doc.data().trips;
+            } else {
+                return undefined;
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+
+    };
 
     /**
      * This function handles all backend updates when a user submits a new shopping list.
